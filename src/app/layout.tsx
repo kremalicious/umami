@@ -14,7 +14,7 @@ export default function ({ children }) {
       <head>
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-        <link rel="manifest" href="/site.webmanifest" />
+        <link rel="manifest" href="/manifest/site.webmanifest" />
         {/* <link rel="mask-icon" href={`/safari-pinned-tab.svg`} color="#5bbad5" /> */}
         <meta name="msapplication-TileColor" content="#da532c" />
         <meta name="theme-color" content="#e7eef4" media="(prefers-color-scheme: light)" />

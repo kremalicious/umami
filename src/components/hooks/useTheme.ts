@@ -7,13 +7,9 @@ import { colord } from 'colord';
 const selector = (state: { theme: string }) => state.theme;
 
 export function useTheme() {
-  const defaultTheme =
-    typeof window !== 'undefined'
-      ? window?.matchMedia('(prefers-color-scheme: dark)')?.matches
-        ? 'dark'
-        : 'light'
-      : 'light';
-  const theme = useStore(selector) || getItem(THEME_CONFIG) || defaultTheme;
+  const isDark = window?.matchMedia('(prefers-color-scheme: dark)')?.matches;
+  const defaultTheme = typeof window !== 'undefined' ? (isDark ? 'dark' : 'light') : 'light';
+  const theme = useStore(selector) || defaultTheme || getItem(THEME_CONFIG);
   const primaryColor = colord(THEME_COLORS[theme].primary);
 
   const colors = {
@@ -60,6 +56,18 @@ export function useTheme() {
     if (['light', 'dark'].includes(theme)) {
       saveTheme(theme);
     }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    let theme: 'dark' | 'light';
+
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addEventListener('change', ({ matches: isDark }) => {
+        theme = isDark ? 'dark' : 'light';
+        saveTheme(theme);
+      });
   }, []);
 
   return { theme, saveTheme, colors };

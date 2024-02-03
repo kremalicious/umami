@@ -3,7 +3,7 @@ import {
   DATE_RANGE_CONFIG,
   DEFAULT_DATE_RANGE,
   DEFAULT_LOCALE,
-  DEFAULT_THEME,
+  // DEFAULT_THEME,
   LOCALE_CONFIG,
   THEME_CONFIG,
 } from 'lib/constants';
@@ -11,7 +11,7 @@ import { getItem } from 'next-basics';
 
 const initialState = {
   locale: getItem(LOCALE_CONFIG) || DEFAULT_LOCALE,
-  theme: getItem(THEME_CONFIG) || DEFAULT_THEME,
+  theme: getItem(THEME_CONFIG),
   dateRange: getItem(DATE_RANGE_CONFIG) || DEFAULT_DATE_RANGE,
   shareToken: null,
   user: null,

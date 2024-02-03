@@ -1,5 +1,6 @@
 import ReportsHeader from './ReportsHeader';
 import ReportsDataTable from './ReportsDataTable';
+import appMeta from '../../../../app.json';
 
 export default function () {
   return (
@@ -10,5 +11,5 @@ export default function () {
   );
 }
 export const metadata = {
-  title: 'Reports | umami',
+  title: `Reports | ${appMeta.name}`,
 };

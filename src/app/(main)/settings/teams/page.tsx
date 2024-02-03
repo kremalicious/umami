@@ -1,6 +1,7 @@
 import TeamsDataTable from './TeamsDataTable';
 import TeamsHeader from './TeamsHeader';
 import { Metadata } from 'next';
+import appMeta from '../../../../../app.json';
 
 export default function () {
   if (process.env.cloudMode) {
@@ -16,5 +17,5 @@ export default function () {
 }
 
 export const metadata: Metadata = {
-  title: 'Teams Settings | umami',
+  title: `Team Settings | ${appMeta.name}`,
 };

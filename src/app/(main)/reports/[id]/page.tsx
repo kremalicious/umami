@@ -1,5 +1,6 @@
 import ReportDetails from './ReportDetails';
 import { Metadata } from 'next';
+import appMeta from '../../../../../app.json';
 
 export default function ReportDetailsPage({ params: { id } }) {
   if (!id) {
@@ -10,5 +11,5 @@ export default function ReportDetailsPage({ params: { id } }) {
 }
 
 export const metadata: Metadata = {
-  title: 'Reports | umami',
+  title: `Reports | ${appMeta.name}`,
 };

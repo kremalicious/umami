@@ -10,6 +10,7 @@ import useMessages from 'components/hooks/useMessages';
 import HamburgerButton from 'components/common/HamburgerButton';
 import { usePathname } from 'next/navigation';
 import styles from './NavBar.module.css';
+import appMeta from '../../../app.json';
 
 export function NavBar() {
   const pathname = usePathname();
@@ -63,7 +64,7 @@ export function NavBar() {
         <Icon size="lg">
           <Icons.Logo />
         </Icon>
-        <Text>umami</Text>
+        <Text>{appMeta.name}</Text>
       </div>
       <div className={styles.links}>
         {links.map(({ url, label }) => {

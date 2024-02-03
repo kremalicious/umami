@@ -16,6 +16,7 @@ import { setClientAuthToken } from 'lib/client';
 import useMessages from 'components/hooks/useMessages';
 import Logo from 'assets/logo.svg';
 import styles from './LoginForm.module.css';
+import appMeta from '../../../app.json';
 
 export function LoginForm() {
   const { formatMessage, labels, getMessage } = useMessages();
@@ -41,7 +42,7 @@ export function LoginForm() {
       <Icon className={styles.icon} size="xl">
         <Logo />
       </Icon>
-      <div className={styles.title}>umami</div>
+      <div className={styles.title}>{appMeta.name}</div>
       <Form className={styles.form} onSubmit={handleSubmit} error={getMessage(error)}>
         <FormRow label={formatMessage(labels.username)}>
           <FormInput name="username" rules={{ required: formatMessage(labels.required) }}>

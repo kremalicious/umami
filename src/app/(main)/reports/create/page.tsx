@@ -1,11 +1,10 @@
-import ReportTemplates from './ReportTemplates';
+import ReportCreatePage from './ReportCreatePage';
 import { Metadata } from 'next';
-import appMeta from '../../../../../app.json';
 
-export default function ReportsCreatePage() {
-  return <ReportTemplates />;
+export default function () {
+  return <ReportCreatePage />;
 }
 
 export const metadata: Metadata = {
-  title: `Create Report | ${appMeta.name}`,
+  title: 'Create Report',
 };

@@ -1,11 +1,10 @@
-import Logout from './Logout';
+import LogoutPage from './LogoutPage';
 import { Metadata } from 'next';
-import appMeta from '../../../app.json';
 
 export default function () {
-  return <Logout />;
+  return <LogoutPage />;
 }
 
 export const metadata: Metadata = {
-  title: `Logout | ${appMeta.name}`,
+  title: 'Logout',
 };

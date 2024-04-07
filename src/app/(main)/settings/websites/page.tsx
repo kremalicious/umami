@@ -1,11 +1,10 @@
 import { Metadata } from 'next';
-import Websites from './Websites';
-import appMeta from '../../../../../app.json';
+import WebsitesSettingsPage from './WebsitesSettingsPage';
 
-export default function () {
-  return <Websites />;
+export default function ({ params: { teamId } }: { params: { teamId: string } }) {
+  return <WebsitesSettingsPage teamId={teamId} />;
 }
 
 export const metadata: Metadata = {
-  title: `Website Settings | ${appMeta.name}`,
+  title: 'Websites',
 };

@@ -1,21 +1,10 @@
-import TeamsDataTable from './TeamsDataTable';
-import TeamsHeader from './TeamsHeader';
 import { Metadata } from 'next';
-import appMeta from '../../../../../app.json';
+import TeamsSettingsPage from './TeamsSettingsPage';
 
 export default function () {
-  if (process.env.cloudMode) {
-    return null;
-  }
-
-  return (
-    <>
-      <TeamsHeader />
-      <TeamsDataTable />
-    </>
-  );
+  return <TeamsSettingsPage />;
 }
 
 export const metadata: Metadata = {
-  title: `Team Settings | ${appMeta.name}`,
+  title: 'Teams',
 };

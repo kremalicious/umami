@@ -1,15 +1,10 @@
-import ReportsHeader from './ReportsHeader';
-import ReportsDataTable from './ReportsDataTable';
-import appMeta from '../../../../app.json';
+import ReportsPage from './ReportsPage';
+import { Metadata } from 'next';
 
-export default function () {
-  return (
-    <>
-      <ReportsHeader />
-      <ReportsDataTable />
-    </>
-  );
+export default function ({ params: { teamId } }: { params: { teamId: string } }) {
+  return <ReportsPage teamId={teamId} />;
 }
-export const metadata = {
-  title: `Reports | ${appMeta.name}`,
+
+export const metadata: Metadata = {
+  title: 'Reports',
 };

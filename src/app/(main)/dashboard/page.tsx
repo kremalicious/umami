@@ -1,11 +1,10 @@
-import Dashboard from 'app/(main)/dashboard/Dashboard';
+import DashboardPage from './DashboardPage';
 import { Metadata } from 'next';
-import appMeta from '../../../../app.json';
 
 export default function () {
-  return <Dashboard />;
+  return <DashboardPage />;
 }
 
 export const metadata: Metadata = {
-  title: `Dashboard | ${appMeta.name}`,
+  title: 'Dashboard',
 };

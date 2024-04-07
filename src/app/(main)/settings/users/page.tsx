@@ -1,10 +1,9 @@
-import UsersDataTable from './UsersDataTable';
 import { Metadata } from 'next';
-import appMeta from '../../../../../app.json';
+import UsersSettingsPage from './UsersSettingsPage';
 
 export default function () {
-  return <UsersDataTable />;
+  return <UsersSettingsPage />;
 }
 export const metadata: Metadata = {
-  title: `Users | ${appMeta.name}`,
+  title: 'Users',
 };

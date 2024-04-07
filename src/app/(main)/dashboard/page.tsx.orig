@@ -1,0 +1,15 @@
+import DashboardPage from './DashboardPage';
+import { Metadata } from 'next';
+import appMeta from '../../../../app.json';
+
+export default function () {
+  return <DashboardPage />;
+}
+
+export const metadata: Metadata = {
+<<<<<<< HEAD
+  title: `Dashboard | ${appMeta.name}`,
+=======
+  title: 'Dashboard',
+>>>>>>> upstream/master
+};

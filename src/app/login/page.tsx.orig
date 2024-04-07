@@ -1,0 +1,19 @@
+import { Metadata } from 'next';
+<<<<<<< HEAD
+import styles from './page.module.css';
+import appMeta from '../../../app.json';
+=======
+import LoginPage from './LoginPage';
+>>>>>>> upstream/master
+
+export default async function () {
+  return <LoginPage />;
+}
+
+export const metadata: Metadata = {
+<<<<<<< HEAD
+  title: `Login | ${appMeta.name}`,
+=======
+  title: 'Login',
+>>>>>>> upstream/master
+};

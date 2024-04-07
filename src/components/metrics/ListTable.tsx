@@ -3,7 +3,7 @@ import { useSpring, animated, config } from '@react-spring/web';
 import classNames from 'classnames';
 import Empty from 'components/common/Empty';
 import { formatLongNumber } from 'lib/format';
-import useMessages from 'components/hooks/useMessages';
+import { useMessages } from 'components/hooks';
 import styles from './ListTable.module.css';
 import { ReactNode } from 'react';
 
@@ -63,6 +63,7 @@ export function ListTable({
         {data?.length === 0 && <Empty className={styles.empty} />}
         {virtualize && data.length > 0 ? (
           <FixedSizeList
+            width="100%"
             height={itemCount * ITEM_SIZE}
             itemCount={data.length}
             itemSize={ITEM_SIZE}
@@ -96,9 +97,7 @@ const AnimatedRow = ({ label, value = 0, percent, animate, showPercentage = true
       {showPercentage && (
         <div className={styles.percent}>
           <animated.div className={styles.bar} style={{ width: props.width.to(n => `${n}%`) }} />
-          <animated.span className={styles.percentValue}>
-            {props.width.to(n => `${n?.toFixed?.(0)}%`)}
-          </animated.span>
+          <animated.span>{props.width.to(n => `${n?.toFixed?.(0)}%`)}</animated.span>
         </div>
       )}
     </div>

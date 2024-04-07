@@ -1,0 +1,18 @@
+import { Metadata } from 'next';
+<<<<<<< HEAD
+import appMeta from '../../../../../app.json';
+=======
+import TeamsSettingsPage from './TeamsSettingsPage';
+>>>>>>> upstream/master
+
+export default function () {
+  return <TeamsSettingsPage />;
+}
+
+export const metadata: Metadata = {
+<<<<<<< HEAD
+  title: `Team Settings | ${appMeta.name}`,
+=======
+  title: 'Teams',
+>>>>>>> upstream/master
+};

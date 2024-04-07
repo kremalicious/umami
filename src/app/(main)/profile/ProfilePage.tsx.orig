@@ -1,0 +1,25 @@
+'use client';
+import ProfileHeader from './ProfileHeader';
+import ProfileSettings from './ProfileSettings';
+<<<<<<< HEAD:src/app/(main)/settings/profile/page.tsx
+import { Metadata } from 'next';
+import appMeta from '../../../../../app.json';
+=======
+import styles from './ProfilePage.module.css';
+>>>>>>> upstream/master:src/app/(main)/profile/ProfilePage.tsx
+
+export default function () {
+  return (
+    <div className={styles.container}>
+      <ProfileHeader />
+      <ProfileSettings />
+    </div>
+  );
+}
+<<<<<<< HEAD:src/app/(main)/settings/profile/page.tsx
+
+export const metadata: Metadata = {
+  title: `Profile Settings | ${appMeta.name}`,
+};
+=======
+>>>>>>> upstream/master:src/app/(main)/profile/ProfilePage.tsx

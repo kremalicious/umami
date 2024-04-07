@@ -1,0 +1,15 @@
+import WebsitesPage from './WebsitesPage';
+import { Metadata } from 'next';
+import appMeta from '../../../../app.json';
+
+export default function ({ params: { teamId, userId } }) {
+  return <WebsitesPage teamId={teamId} userId={userId} />;
+}
+
+export const metadata: Metadata = {
+<<<<<<< HEAD
+  title: `Websites | ${appMeta.name}`,
+=======
+  title: 'Websites',
+>>>>>>> upstream/master
+};

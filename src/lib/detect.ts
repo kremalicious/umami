@@ -5,14 +5,36 @@ import ipaddr from 'ipaddr.js';
 import maxmind from 'maxmind';
 import {
   DESKTOP_OS,
-  MOBILE_OS,
   DESKTOP_SCREEN_WIDTH,
-  LAPTOP_SCREEN_WIDTH,
-  MOBILE_SCREEN_WIDTH,
   IP_ADDRESS_HEADERS,
+  LAPTOP_SCREEN_WIDTH,
+  MOBILE_OS,
+  MOBILE_SCREEN_WIDTH,
 } from './constants';
+import { safeDecodeURIComponent } from '@/lib/url';
 
 const MAXMIND = 'maxmind';
+
+const PROVIDER_HEADERS = [
+  // Cloudflare headers
+  {
+    countryHeader: 'cf-ipcountry',
+    regionHeader: 'cf-region-code',
+    cityHeader: 'cf-ipcity',
+  },
+  // Vercel headers
+  {
+    countryHeader: 'x-vercel-ip-country',
+    regionHeader: 'x-vercel-ip-country-region',
+    cityHeader: 'x-vercel-ip-city',
+  },
+  // CloudFront headers
+  {
+    countryHeader: 'cloudfront-viewer-country',
+    regionHeader: 'cloudfront-viewer-country-region',
+    cityHeader: 'cloudfront-viewer-city',
+  },
+];
 
 export function getIpAddress(headers: Headers) {
   const customHeader = process.env.CLIENT_IP_HEADER;
@@ -93,30 +115,19 @@ export async function getLocation(ip: string = '', headers: Headers, hasPayloadI
   }
 
   if (!hasPayloadIP && !process.env.SKIP_LOCATION_HEADERS) {
-    // Cloudflare headers
-    if (headers.get('cf-ipcountry')) {
-      const country = decodeHeader(headers.get('cf-ipcountry'));
-      const subdivision1 = decodeHeader(headers.get('cf-region-code'));
-      const city = decodeHeader(headers.get('cf-ipcity'));
+    for (const provider of PROVIDER_HEADERS) {
+      const countryHeader = headers.get(provider.countryHeader);
+      if (countryHeader) {
+        const country = decodeHeader(countryHeader);
+        const region = decodeHeader(headers.get(provider.regionHeader));
+        const city = decodeHeader(headers.get(provider.cityHeader));
 
-      return {
-        country,
-        subdivision1: getRegionCode(country, subdivision1),
-        city,
-      };
-    }
-
-    // Vercel headers
-    if (headers.get('x-vercel-ip-country')) {
-      const country = decodeHeader(headers.get('x-vercel-ip-country'));
-      const subdivision1 = decodeHeader(headers.get('x-vercel-ip-country-region'));
-      const city = decodeHeader(headers.get('x-vercel-ip-city'));
-
-      return {
-        country,
-        subdivision1: getRegionCode(country, subdivision1),
-        city,
-      };
+        return {
+          country,
+          region: getRegionCode(country, region),
+          city,
+        };
+      }
     }
   }
 
@@ -124,21 +135,23 @@ export async function getLocation(ip: string = '', headers: Headers, hasPayloadI
   if (!global[MAXMIND]) {
     const dir = path.join(process.cwd(), 'geo');
 
-    global[MAXMIND] = await maxmind.open(path.resolve(dir, 'GeoLite2-City.mmdb'));
+    global[MAXMIND] = await maxmind.open(
+      process.env.GEOLITE_DB_PATH || path.resolve(dir, 'GeoLite2-City.mmdb'),
+    );
   }
 
-  const result = global[MAXMIND].get(ip);
+  // When the client IP is extracted from headers, sometimes the value includes a port
+  const cleanIp = ip?.split(':')[0];
+  const result = global[MAXMIND].get(cleanIp);
 
   if (result) {
     const country = result.country?.iso_code ?? result?.registered_country?.iso_code;
-    const subdivision1 = result.subdivisions?.[0]?.iso_code;
-    const subdivision2 = result.subdivisions?.[1]?.names?.en;
+    const region = result.subdivisions?.[0]?.iso_code;
     const city = result.city?.names?.en;
 
     return {
       country,
-      subdivision1: getRegionCode(country, subdivision1),
-      subdivision2,
+      region: getRegionCode(country, region),
       city,
     };
   }
@@ -148,15 +161,14 @@ export async function getClientInfo(request: Request, payload: Record<string, an
   const userAgent = payload?.userAgent || request.headers.get('user-agent');
   const ip = payload?.ip || getIpAddress(request.headers);
   const location = await getLocation(ip, request.headers, !!payload?.ip);
-  const country = location?.country;
-  const subdivision1 = location?.subdivision1;
-  const subdivision2 = location?.subdivision2;
-  const city = location?.city;
+  const country = safeDecodeURIComponent(location?.country);
+  const region = safeDecodeURIComponent(location?.region);
+  const city = safeDecodeURIComponent(location?.city);
   const browser = browserName(userAgent);
   const os = detectOS(userAgent) as string;
   const device = getDevice(payload?.screen, os);
 
-  return { userAgent, browser, os, ip, country, subdivision1, subdivision2, city, device };
+  return { userAgent, browser, os, ip, country, region, city, device };
 }
 
 export function hasBlockedIp(clientIp: string) {

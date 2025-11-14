@@ -1,0 +1,19 @@
+import * as React from 'react';
+import type { SVGProps } from 'react';
+const SvgLogo = (props: SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={24}
+    height={24}
+    fill="currentColor"
+    stroke="none"
+    viewBox="0 0 330 330"
+    {...props}
+  >
+    <path
+      d="M408,226 L432,250 L125,556 L102,533 L408,226 Z M408,317 L432,341 L216,556 L193,533 L408,317 Z M318,226 L341,250 L125,465 L102,442 L318,226 Z"
+      transform="translate(-102 -226)"
+    />
+  </svg>
+);
+export default SvgLogo;
